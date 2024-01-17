@@ -1,3 +1,10 @@
+.main-bg {
+  height: 300px;
+  background-image: url('/public/background.png');
+  background-size: cover;
+  background-position: center;
+}
+
 .App {
   text-align: center;
 }
@@ -36,3 +43,8 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar .container {
+  margin-left: 20px;
+}
+
