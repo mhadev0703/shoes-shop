@@ -1,16 +1,32 @@
+import { useParams, Link } from "react-router-dom";
+import styled from 'styled-components';
+
+let Btn = styled.button`
+  background : ${ props => props.bg };
+  color: ${ props => props.bg == 'yellow' ? 'black' : 'white'};
+  padding : 10px;
+  text-decoration : none;
+`
+
 function Detail(props) {
-    const { title, content, price } = props.shoes;
+
+    let {id} = useParams();
+    id = parseInt(id);
+
+    const itemId = props.shoes.findIndex((item) => item.id === id);
 
     return (
         <div className="container">
+                <Btn bg="yellow">Button</Btn>
+                <Btn bg="skyblue">Button</Btn>
             <div className="row">
                 <div className="col-md-6">
-                    <img src={process.env.PUBLIC_URL + '/shoes1.jpeg'} width="100%" />
+                    <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
                 </div>
                 <div className="col-md-6">
-                    <h4 className="pt-5">{title}</h4>
-                    <p>{content}</p>
-                    <p>${price}</p>
+                    <h4 className="pt-5">{props.shoes[itemId].title}</h4>
+                    <p>{props.shoes[itemId].content}</p>
+                    <p>${props.shoes[itemId].price}</p>
                     <button className="btn btn-danger">Order Item</button>
                 </div>
             </div>

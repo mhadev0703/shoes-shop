@@ -37,11 +37,16 @@ function App() {
           </Container>
           </>
         } />
-        <Route path="/detail" element={<Detail shoes={shoes[0]}/>} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>Members</div>} />
           <Route path="location" element={<div>Location</div>} />
+        </Route>
+
+        <Route path="/event" element={<Event/>}>
+          <Route path="bonus" element={<div>Bonus item for your first order 🎁</div>} />
+          <Route path="coupon" element={<div>Get your birthday coupon 🎉</div>} />
         </Route>
         
         <Route path="*" element={<div>The Page doesn't exist.</div>} />
@@ -49,6 +54,15 @@ function App() {
 
     </div>
   );  
+}
+
+function Event() {
+  return (
+    <div>
+      <h4>Today's event!</h4>
+      <Outlet></Outlet>
+    </div>
+  )
 }
 
 function About() {
