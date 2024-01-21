@@ -1,14 +1,20 @@
-import { useParams, Link } from "react-router-dom";
-import styled from 'styled-components';
-
-let Btn = styled.button`
-  background : ${ props => props.bg };
-  color: ${ props => props.bg == 'yellow' ? 'black' : 'white'};
-  padding : 10px;
-  text-decoration : none;
-`
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function Detail(props) {
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const alertBox = document.querySelector('.alert');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
+        }, 10000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, []);
 
     let {id} = useParams();
     id = parseInt(id);
@@ -17,8 +23,7 @@ function Detail(props) {
 
     return (
         <div className="container">
-                <Btn bg="yellow">Button</Btn>
-                <Btn bg="skyblue">Button</Btn>
+            <div className="alert alert-warning">Additional discount when you order in 10 sec</div>
             <div className="row">
                 <div className="col-md-6">
                     <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
