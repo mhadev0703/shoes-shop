@@ -1,20 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function Detail(props) {
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const alertBox = document.querySelector('.alert');
-            if (alertBox) {
-                alertBox.style.display = 'none';
-            }
-        }, 10000);
+    let [alert, setAlert] = useState(true)
+    let [countdown, setCountdown] = useState(5)
+
+    useEffect(()=>{
+        const timer = setInterval(() => {
+            setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+
+        setTimeout(() => {
+            setAlert(false);
+            clearInterval(timer);
+        }, 5000);
 
         return () => {
-            clearTimeout(timer);
+            clearInterval(timer);
         };
-    }, []);
+    }, [])
 
     let {id} = useParams();
     id = parseInt(id);
@@ -23,7 +28,13 @@ function Detail(props) {
 
     return (
         <div className="container">
-            <div className="alert alert-warning">Additional discount when you order in 10 sec</div>
+            {
+                alert == true
+                ? <div className="alert alert-warning">
+                    Additional discount when you order in {countdown} sec
+                  </div>
+                : null
+            }
             <div className="row">
                 <div className="col-md-6">
                     <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
