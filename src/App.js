@@ -5,11 +5,21 @@ import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/Detail.js';
+import axios from 'axios';
 
 function App() {
 
-  let [shoes] = useState(data)
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+
+  // Convert the item price from external json file
+  const convertPrice = (previousPrice) => {
+    const currencyRate = 0.001;
+    return previousPrice * currencyRate;
+  };
+
+  const [clickCount, setClickCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="App">      
@@ -35,8 +45,44 @@ function App() {
               })}
             </Row>
           </Container>
+          <button onClick={() => {
+
+            setClickCount(prev => prev + 1);
+            let url = '';
+            
+            if (clickCount === 1) {
+              url = 'https://codingapple1.github.io/shop/data2.json';
+            } else if (clickCount === 2) {
+              url = 'https://codingapple1.github.io/shop/data3.json'
+            } else if (clickCount >= 3) {
+              alert('There are no more items to show.');
+              return;
+            }
+
+            setIsLoading(true);
+
+            axios.get(url)
+            .then((result) => {
+              const convertedData = result.data.map((item) => ({
+                ...item,
+                price: convertPrice(item.price), 
+              }));
+
+              let copiedShoes = [...shoes, ...convertedData];
+              setShoes(copiedShoes);
+            })
+            .catch(() => {
+              console.log('Connection failed')
+            })
+            .finally(() => {
+              // stop the loading process after data fetching is complete
+              setIsLoading(false);
+            })
+          }}>See more</button>
+          {isLoading && <div>Loading...</div>}
           </>
         } />
+
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
 
         <Route path="/about" element={<About/>}>

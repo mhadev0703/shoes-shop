@@ -47,7 +47,11 @@ function Detail(props) {
                     <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
                 </div>
                 <div className="col-md-6">
-                    <input onChange={(e) => { setInputValue(e.target.value) }} Placeholder="Enter a number"></input>
+                    <input onChange={(e) => { 
+                        setInputValue(e.target.value); 
+                        }} 
+                        Placeholder="Enter a number"
+                    ></input>
                     <h4 className="pt-5">{props.shoes[itemId].title}</h4>
                     <p>{props.shoes[itemId].content}</p>
                     <p>${props.shoes[itemId].price}</p>
