@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav } from 'react-bootstrap';
+import { Context1 } from './../App.js'
 
 function Detail(props) {
 
-    let [inputValue, setInputValue] = useState("");
-    let [errorMessage, setErrorMessage] = useState("");
+    let {context} = useContext(Context1)
+
     let [alert, setAlert] = useState(true);
     let [tab, setTab] = useState(0);
     let [fade2, setFade2] = useState('');
@@ -23,14 +24,6 @@ function Detail(props) {
             setFade2('');
         }
     }, [])
-
-    useEffect(() => {
-        if (isNaN(inputValue)) {
-            setErrorMessage('Input value must be a number.');
-        } else {
-            setErrorMessage('');
-        }
-    }, [inputValue])
 
     useEffect(() => {
         let timer = setTimeout(() => { setAlert(false) }, 5000);
@@ -50,21 +43,11 @@ function Detail(props) {
                     </div>
                     : null
             }
-            {errorMessage && (
-                <div className="alert alert-danger">
-                    {errorMessage}
-                </div>
-            )}
             <div className="row">
                 <div className="col-md-6">
                     <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
                 </div>
                 <div className="col-md-6">
-                    <input onChange={(e) => { 
-                        setInputValue(e.target.value); 
-                        }} 
-                        placeholder="Enter a number"
-                    ></input>
                     <h4 className="pt-5">{props.shoes[itemId].title}</h4>
                     <p>{props.shoes[itemId].content}</p>
                     <p>${props.shoes[itemId].price}</p>
@@ -83,7 +66,7 @@ function Detail(props) {
                     <Nav.Link onClick={() => { setTab(2) }} eventKey="link2">Button3</Nav.Link>
                 </Nav.Item>
             </Nav>
-            <TabContent tab={tab} />
+            <TabContent shoes={props.shoes} tab={tab} />
 
         </div>
     )
@@ -92,6 +75,7 @@ function Detail(props) {
 function TabContent({tab}) {
 
     let [fade, setFade] = useState('');
+    let {stock} = useContext(Context1);
 
     useEffect(() => {
         setTimeout(() => { setFade('end') }, 100)
@@ -102,7 +86,7 @@ function TabContent({tab}) {
     }, [tab])
 
     return (<div className={'start ' + fade}>
-        { [<div>Content1</div>, <div>Content2</div>, <div>Content3</div>][tab] }
+        { [<div>{stock}</div>, <div>Content2</div>, <div>Content3</div>][tab] }
     </div>)
 }
 

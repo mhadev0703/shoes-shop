@@ -1,15 +1,21 @@
 import './App.css';
-import { useState } from "react";
+import { createContext, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/Detail.js';
+import Cart from './pages/Cart.js';
 import axios from 'axios';
+
+
+export let Context1 = createContext()
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let [stock] = useState([10, 11, 12]);
+
   let navigate = useNavigate();
 
   // Convert the item price from external json file
@@ -83,7 +89,15 @@ function App() {
           </>
         } />
 
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{ stock }}>
+            <Detail shoes={shoes} />
+          </Context1.Provider>
+        } />
+
+        <Route path="/cart" element={ <Cart/> }>
+
+        </Route>
 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>Members</div>} />
