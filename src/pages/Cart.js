@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
-import { changeName } from './../store.js';
+import { changeName, plusAge } from './../store/userSlice.js';
+import { increaseQty } from './../store.js';
 
 function Cart() {
 
@@ -14,7 +15,10 @@ function Cart() {
 
     return(
         <div>
-            { userSelector }'s cart
+            <h6>{ userSelector.name }'s cart (Age : { userSelector.age })</h6>
+            <button onClick={() => {
+                dispatch(plusAge(14))
+            }}>Button</button>
             <Table>
                 <thead>
                     <tr>
@@ -33,8 +37,7 @@ function Cart() {
                                 <td>{ cartSelector[i].count}</td>
                                 <td>
                                     <button onClick={() => {
-                                        // request store.js to do changeName()
-                                        dispatch(changeName())
+                                        dispatch(increaseQty(cartSelector[i].id))
                                     }}>+</button>
                                 </td>
                             </tr>
