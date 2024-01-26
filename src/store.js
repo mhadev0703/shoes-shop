@@ -11,13 +11,38 @@ let cart = createSlice({
     ],
     reducers : {
         increaseQty(state, action) {
-            let itemNum = state.findIndex((a) => { return a.id === action.payload })
-            state[itemNum].count++
+            let itemNum = state.findIndex((a) => { return a.id === action.payload; })
+            state[itemNum].count++;
+        },
+        decreaseQty(state, action) {
+            let itemNum = state.findIndex((a) => { return a.id === action.payload; })
+            // Check if the item is in the cart
+            if (itemNum !== -1) {
+                if (state[itemNum].count > 0) {
+                    state[itemNum].count--;
+                }
+            }
+        },
+        addCart(state, action) {
+            let itemNum = state.findIndex((a) => { return a.id === action.payload; })
+            if (itemNum === -1) {
+                state.push(action.payload);
+            } else {
+                state[itemNum].count++;
+            }
+        },
+        removeItem(state, action) {
+            let itemNum = state.findIndex((a) => { return a.id === action.payload; })
+            if (itemNum !== -1) {
+                // Remove one element at specific index
+                state.splice(itemNum, 1);
+            }
         }
+        
     }
 })
 
-export let { increaseQty } = cart.actions;
+export let { increaseQty, decreaseQty, addCart, removeItem } = cart.actions;
 
 export default configureStore({
     reducer: {

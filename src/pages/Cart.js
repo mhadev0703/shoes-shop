@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, plusAge } from './../store/userSlice.js';
-import { increaseQty } from './../store.js';
+import { increaseQty, decreaseQty, removeItem } from './../store.js';
 
 function Cart() {
 
@@ -39,6 +39,14 @@ function Cart() {
                                     <button onClick={() => {
                                         dispatch(increaseQty(cartSelector[i].id))
                                     }}>+</button>
+                                    &nbsp;&nbsp;
+                                    <button onClick={() => {
+                                        dispatch(decreaseQty(cartSelector[i].id))
+                                    }}>-</button>
+                                    &nbsp;&nbsp;
+                                    <button onClick={() => {
+                                        dispatch(removeItem(cartSelector[i].id))
+                                    }}>Remove</button>
                                 </td>
                             </tr>
                         )

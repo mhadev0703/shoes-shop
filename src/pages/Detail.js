@@ -3,8 +3,12 @@ import { useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav } from 'react-bootstrap';
 import { Context1 } from './../App.js'
+import { useDispatch } from "react-redux";
+import { addCart } from './../store.js';
 
 function Detail(props) {
+
+    let dispatch = useDispatch()
 
     let {context} = useContext(Context1)
 
@@ -51,7 +55,9 @@ function Detail(props) {
                     <h4 className="pt-5">{props.shoes[itemId].title}</h4>
                     <p>{props.shoes[itemId].content}</p>
                     <p>${props.shoes[itemId].price}</p>
-                    <button className="btn btn-danger">Order Item</button>
+                    <button className="btn btn-danger" onClick={() => {
+                        dispatch(addCart({id : props.shoes[itemId], name : props.shoes[itemId].title, count : 1}))
+                    }}>Order Item</button>
                 </div>
             </div>
             
