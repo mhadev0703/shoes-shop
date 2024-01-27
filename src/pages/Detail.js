@@ -12,7 +12,6 @@ function Detail(props) {
 
     let {context} = useContext(Context1)
 
-    let [alert, setAlert] = useState(true);
     let [tab, setTab] = useState(0);
     let [fade2, setFade2] = useState('');
 
@@ -29,24 +28,8 @@ function Detail(props) {
         }
     }, [])
 
-    useEffect(() => {
-        let timer = setTimeout(() => { setAlert(false) }, 5000);
-
-        return () => {
-            clearTimeout(timer);
-        }
-    }, [])
-
-
     return (
         <div className={'container start ' + fade2}>
-            {
-                alert == true
-                    ? <div className="alert alert-warning">
-                        Additional discount when you order in 5 sec
-                    </div>
-                    : null
-            }
             <div className="row">
                 <div className="col-md-6">
                     <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
