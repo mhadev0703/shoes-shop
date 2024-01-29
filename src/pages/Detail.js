@@ -40,7 +40,7 @@ function Detail(props) {
                     <p>${props.shoes[itemId].price}</p>
                     <button className="btn btn-danger" onClick={() => {
                         dispatch(addCart({id : props.shoes[itemId].id, name : props.shoes[itemId].title, count : 1}))
-                    }}>Order Item</button>
+                    }}>Add to cart</button>
                 </div>
             </div>
             
