@@ -13,7 +13,6 @@ export let Context1 = createContext()
 
 function App() {
 
-  let [fade2, setFade2] = useState('');
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);
 
@@ -29,7 +28,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className={'App start ' + fade2}>      
+    <div className="App">      
 
       <Navbar bg="lightgrey" variant="lightgrey" className='navbar'>
         <Container>

@@ -18,7 +18,14 @@ function Detail(props) {
     let { id } = useParams();
     id = parseInt(id);
 
-    const itemId = props.shoes.findIndex((item) => item.id === id);
+    let itemId = props.shoes.findIndex((item) => item.id === id);
+
+    useEffect(() => {
+        let watchedItem = localStorage.getItem('watched')
+        watchedItem = watchedItem ? JSON.parse(watchedItem) : []
+        watchedItem.push(itemId.id)
+        localStorage.setItem('watched', JSON.stringify(watchedItem))
+    }, [])
 
     useEffect(() => {
         setFade2('end');
