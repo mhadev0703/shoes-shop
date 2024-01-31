@@ -1,5 +1,5 @@
 import './App.css';
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import data from './data.js';
@@ -12,6 +12,10 @@ import axios from 'axios';
 export let Context1 = createContext()
 
 function App() {
+
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify( [] ))
+  }, [])
 
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);

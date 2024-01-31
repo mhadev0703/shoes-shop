@@ -18,35 +18,27 @@ function Detail(props) {
     let { id } = useParams();
     id = parseInt(id);
 
-    let itemId = props.shoes.findIndex((item) => item.id === id);
+    let selectedShoes = props.shoes.findIndex((item) => item.id === id);
 
-    useEffect(() => {
-        let watchedItem = localStorage.getItem('watched')
-        watchedItem = watchedItem ? JSON.parse(watchedItem) : []
-        watchedItem.push(itemId.id)
-        localStorage.setItem('watched', JSON.stringify(watchedItem))
-    }, [])
-
-    useEffect(() => {
-        setFade2('end');
-
-        return () => {
-            setFade2('');
-        }
-    }, [])
+    useEffect(()=>{
+        let found = localStorage.getItem('watched')
+        found = JSON.parse(found)
+        found.push(selectedShoes.id)
+        localStorage.setItem('watched', JSON.stringify(found))
+      }, [])
 
     return (
         <div className={'container start ' + fade2}>
             <div className="row">
                 <div className="col-md-6">
-                    <img src={process.env.PUBLIC_URL + '/shoes' + (itemId + 1) + '.jpeg'} width="100%" />
+                    <img src={process.env.PUBLIC_URL + '/shoes' + (selectedShoes + 1) + '.jpeg'} width="100%" />
                 </div>
                 <div className="col-md-6">
-                    <h4 className="pt-5">{props.shoes[itemId].title}</h4>
-                    <p>{props.shoes[itemId].content}</p>
-                    <p>${props.shoes[itemId].price}</p>
+                    <h4 className="pt-5">{props.shoes[selectedShoes].title}</h4>
+                    <p>{props.shoes[selectedShoes].content}</p>
+                    <p>${props.shoes[selectedShoes].price}</p>
                     <button className="btn btn-danger" onClick={() => {
-                        dispatch(addCart({id : props.shoes[itemId].id, name : props.shoes[itemId].title, count : 1}))
+                        dispatch(addCart({id : props.shoes[selectedShoes].id, name : props.shoes[selectedShoes].title, count : 1}))
                     }}>Add to cart</button>
                 </div>
             </div>
