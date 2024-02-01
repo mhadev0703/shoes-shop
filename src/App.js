@@ -142,9 +142,11 @@ function About() {
 function Card(props) {
   return (
       <Col>
-        <img src={process.env.PUBLIC_URL + '/shoes' + (props.i) + '.jpeg'} width="80%" /> 
-        <h4>{props.shoes.title}</h4>
-        <p>${props.shoes.price}</p>
+        <Link to={`/detail/${props.shoes.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <img src={process.env.PUBLIC_URL + '/shoes' + (props.i) + '.jpeg'} width="80%" /> 
+          <h4>{props.shoes.title}</h4>
+          <p>${props.shoes.price}</p>
+        </Link>
       </Col>
   )
 }
