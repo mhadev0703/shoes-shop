@@ -20,12 +20,15 @@ function Detail(props) {
 
     let selectedShoes = props.shoes.findIndex((item) => item.id === id);
 
-    useEffect(()=>{
-        let found = localStorage.getItem('watched')
-        found = JSON.parse(found)
-        found.push(selectedShoes.id)
-        localStorage.setItem('watched', JSON.stringify(found))
-      }, [])
+    useEffect(() => {
+        let watchedItem = localStorage.getItem('watched')
+        watchedItem = JSON.parse(watchedItem)
+        watchedItem.push(selectedShoes.id)
+
+        watchedItem = new Set(watchedItem)
+        watchedItem = Array.from(watchedItem)
+        localStorage.setItem('watched', JSON.stringify(watchedItem))
+    }, [])
 
     return (
         <div className={'container start ' + fade2}>
