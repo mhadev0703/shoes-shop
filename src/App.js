@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import data from './data.js';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Outlet, useParams } from 'react-router-dom';
 import Detail from './pages/Detail.js';
 import Cart from './pages/Cart.js';
 import axios from 'axios';
@@ -12,10 +12,6 @@ import axios from 'axios';
 export let Context1 = createContext()
 
 function App() {
-
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify( [] ))
-  }, [])
 
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);
@@ -30,6 +26,13 @@ function App() {
 
   const [clickCount, setClickCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('watched') === null) {
+      localStorage.setItem('watched', JSON.stringify( [] ))
+    }
+  }, [])
+
 
   return (
     <div className="App">      
@@ -56,6 +59,7 @@ function App() {
               })}
             </Row>
           </Container>
+
           <button onClick={() => {
 
             setClickCount(prev => prev + 1);
@@ -141,9 +145,9 @@ function About() {
 
 function Card(props) {
   return (
-      <Col>
+      <Col md={4}>
         <Link to={`/detail/${props.shoes.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <img src={process.env.PUBLIC_URL + '/shoes' + (props.i) + '.jpeg'} width="80%" /> 
+          <img src={process.env.PUBLIC_URL + '/shoes' + (props.i) + '.jpeg'} width="100%" /> 
           <h4>{props.shoes.title}</h4>
           <p>${props.shoes.price}</p>
         </Link>
