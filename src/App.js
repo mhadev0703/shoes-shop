@@ -7,6 +7,7 @@ import { Routes, Route, Link, useNavigate, Outlet, useParams } from 'react-route
 import Detail from './pages/Detail.js';
 import Cart from './pages/Cart.js';
 import axios from 'axios';
+import { useQuery } from 'react-query';
 
 
 export let Context1 = createContext()
@@ -33,6 +34,10 @@ function App() {
     }
   }, [])
 
+  let result = useQuery('name', () =>
+    axios.get('https://codingapple1.github.io/userdata.json')
+    .then((a) => { return a.data })
+  )
 
   return (
     <div className="App">      
@@ -44,6 +49,11 @@ function App() {
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/detail/0') }}>Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
+          </Nav>
+          <Nav className="ml-auto">Hello, 
+            { result.isLoading && 'Loading...' }
+            { result.error && '에러남' }
+            { result.data && result.data.name }
           </Nav>
         </Container>
       </Navbar>      
