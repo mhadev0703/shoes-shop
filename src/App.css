@@ -52,11 +52,3 @@
     transform: rotate(360deg);
   }
 }
-
-.navbar .container {
-  margin-left: 20px;
-}
-
-.ml-auto {
-  float: right;
-}
