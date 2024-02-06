@@ -1,5 +1,5 @@
 import './App.css';
-import { lazy, Suspense, createContext, useEffect, useState } from "react";
+import { lazy, Suspense, createContext, useEffect, useState, useTransition, useDeferredValue } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import data from './data.js';
@@ -131,12 +131,39 @@ function App() {
             <Route path="bonus" element={<div>Bonus item for your first order 🎁</div>} />
             <Route path="coupon" element={<div>Get your birthday coupon 🎉</div>} />
           </Route>
+
+          <Route path="/hook" element={<Hook/>}></Route>
           
           <Route path="*" element={<div>The Page doesn't exist.</div>} />
         </Routes>
       </Suspense>
     </div>
   );  
+}
+
+function Hook() {
+  let a = new Array(10000).fill(0)
+  let [name, setName] = useState('')
+  let [isPending, startTransition] = useTransition()
+  let state = useDeferredValue(name)
+
+  
+  return (
+    <div>
+      <input onChange={ (e)=>{ 
+        startTransition(()=>{
+          setName(e.target.value) 
+        })
+      }}/>
+
+      {
+        isPending ? 'Loading...' :
+        a.map(()=>{
+          return <div>{state}</div>
+        })
+      }
+    </div>
+  )
 }
 
 function Event() {
