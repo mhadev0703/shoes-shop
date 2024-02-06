@@ -3,12 +3,6 @@ import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, plusAge } from './../store/userSlice.js';
 import { increaseQty, decreaseQty, removeItem } from './../store.js';
-import { memo, useState } from "react";
-
-let Child = memo( function(){
-    console.log('Child Component Rerendered')
-    return <div>Child Component</div>
-  })
 
 function Cart() {
 
@@ -18,12 +12,9 @@ function Cart() {
     let cartSelector = useSelector((state) => { return state.cart })
     // send request to store.js
     let dispatch = useDispatch()
-    let [count, setCount] = useState(0)
 
     return(
         <div>
-            <Child></Child>
-            <button onClick={() => { setCount(count + 1) }}>+</button>
             <h6>{ userSelector.name }'s cart (Age : { userSelector.age })</h6>
             <button onClick={() => {
                 dispatch(plusAge(14))
