@@ -13,6 +13,15 @@ function Cart() {
     // send request to store.js
     let dispatch = useDispatch()
 
+    if (cartSelector.length === 0) {
+        return (
+            <div>
+                <h6>{ userSelector.name }'s cart (Age : { userSelector.age })</h6>
+                <div>Your cart is empty.</div>
+            </div>
+        );
+    }
+    
     return(
         <div>
             <h6>{ userSelector.name }'s cart (Age : { userSelector.age })</h6>
